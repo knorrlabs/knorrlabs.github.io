@@ -1,0 +1,134 @@
+/**
+ * knorrlabs palette.
+ *
+ * Two hue families, one rule:
+ *   hue 214 (navy -> slate) = static content. Headings, body, muted, borders, chrome.
+ *   hue 188 (teal)          = interaction, and nothing else. If it's teal, you can click it.
+ *
+ * Slate is not a competing colour: at hue 215.3 it is the brand navy (214.3) with the
+ * chroma drained out, so it is the low-chroma end of the same ramp.
+ *
+ * All contrast figures below are computed, not estimated. See palette spec.
+ */
+
+:root {
+  /* brand constants: identical in both themes, never body text */
+  --knorr-navy: #1d385c;
+  --knorr-teal: #2595a6;
+  --knorr-paper: #fafaf8;
+  --knorr-gradient: linear-gradient(135deg, #1d385c 0%, #2595a6 100%);
+
+  /* interaction ramp — lightest step is the brand teal, by construction:
+     base = hsl(187.9, 63.5%, 30.6%), Infima lightness x1.30 -> #2496a6 (#2595a6 to rounding) */
+  --ifm-color-primary: #1c7380;
+  --ifm-color-primary-dark: #1a6773;
+  --ifm-color-primary-darker: #18616c;
+  --ifm-color-primary-darkest: #145059;
+  --ifm-color-primary-light: #1f7e8c;
+  --ifm-color-primary-lighter: #218493;
+  --ifm-color-primary-lightest: #2595a6;
+
+  /* surfaces + content */
+  --ifm-background-color: #fafaf8;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-font-color-base: #16202b;          /* 15.75:1 on paper */
+  --ifm-heading-color: #1d385c;            /* 11.34:1 — navy is ink, not primary */
+  --ifm-link-color: var(--ifm-color-primary);      /* 5.27:1 */
+  --ifm-link-hover-color: var(--ifm-color-primary-darker);  /* 6.78:1 */
+
+  /* chrome */
+  --ifm-navbar-background-color: #fafaf8;
+  --ifm-navbar-link-color: #1d385c;
+  --ifm-navbar-link-hover-color: var(--ifm-color-primary);
+  --ifm-footer-background-color: #1d385c;
+  --ifm-footer-color: #dbe3ec;             /* 9.15:1 on navy */
+  --ifm-footer-link-color: #92dce7;        /* 7.68:1 on navy */
+  --ifm-footer-title-color: #ffffff;
+
+  /* neutrals */
+  --knorr-ink-muted: #475569;              /* slate-600, 7.25:1 */
+  --knorr-border: #e3e7ec;                 /* DECORATIVE rules only — 1.19:1 */
+  --knorr-border-strong: #8193aa;          /* 3.00:1 — required wherever a border is the
+                                              only delimiter of an interactive control
+                                              (WCAG 1.4.11). Project cards are clickable. */
+  --knorr-surface-accent: #ebf3f2;
+  --ifm-toc-border-color: #e3e7ec;
+  --ifm-color-emphasis-300: #dde3ea;
+
+  --ifm-code-background: #f6f8fa;
+  --docusaurus-highlighted-code-line-bg: rgba(37, 149, 166, 0.12);
+}
+
+[data-theme="dark"] {
+  /* Re-derived, not inverted. Ground #0c1118 has Y=0.0055, so the 4.5:1 floor is
+     Y>=0.1995; the light-mode ceiling on #fafaf8 is Y<=0.1733. Brand teal is Y=0.2464
+     — it fails light by 0.073 and clears dark by 0.047. So the unmodified brand teal
+     becomes the DARKEST step here, having been the lightest in light mode:
+     base = hsl(187.9, 63.5%, 56.9%), x0.70 -> #2595a6 exactly.
+     Hue and saturation held constant; only lightness is solved. */
+  --ifm-color-primary: #4bc4d7;
+  --ifm-color-primary-dark: #33bdd2;
+  --ifm-color-primary-darker: #2db5c9;
+  --ifm-color-primary-darkest: #2595a6;
+  --ifm-color-primary-light: #63ccdc;
+  --ifm-color-primary-lighter: #6fd0df;
+  --ifm-color-primary-lightest: #92dce7;
+
+  --ifm-background-color: #0c1118;
+  --ifm-background-surface-color: #171f29;
+  --ifm-font-color-base: #dbe3ec;          /* 14.62:1 */
+  --ifm-heading-color: #eef3f8;            /* 16.96:1 */
+  --ifm-link-color: var(--ifm-color-primary);   /* 9.18:1 */
+  /* Infima defaults link-hover to primary-darker. Correct in light, where darker is
+     also higher contrast. In dark the ramp runs the other way, so the default makes
+     links DIMMER on hover. Override to -light. */
+  --ifm-link-hover-color: var(--ifm-color-primary-light);
+
+  --ifm-navbar-background-color: #0c1118;
+  --ifm-navbar-link-color: #dbe3ec;
+  --ifm-navbar-link-hover-color: var(--ifm-color-primary);
+  --ifm-footer-background-color: #171f29;
+  --ifm-footer-color: #dbe3ec;
+  --ifm-footer-link-color: #4bc4d7;
+  --ifm-footer-title-color: #eef3f8;
+
+  --knorr-ink-muted: #94a3b8;              /* slate-400, 7.39:1 */
+  --knorr-border: #26303d;                 /* DECORATIVE only — 1.42:1 */
+  --knorr-border-strong: #516278;          /* 3.04:1 */
+  --knorr-surface-accent: #182b36;
+  --ifm-toc-border-color: #26303d;
+  --ifm-color-emphasis-300: #26303d;
+
+  --ifm-code-background: #171f29;
+  --docusaurus-highlighted-code-line-bg: rgba(37, 149, 166, 0.2);
+
+  /* dracula's own background is #282a36 (hue 231, purple-tinted) which fights the
+     hue-214 navy surface. Its token palette contains no teal-band colour, so the
+     theme itself is kept; only the ground is corrected. */
+  --prism-background-color: #171f29;
+}
+
+/* The navbar sits on the page ground rather than floating on white. */
+.navbar {
+  border-bottom: 1px solid var(--knorr-border);
+  box-shadow: none;
+}
+
+.navbar__title {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--knorr-navy);
+}
+
+[data-theme="dark"] .navbar__title {
+  color: var(--ifm-heading-color);
+}
+
+.footer--dark {
+  --ifm-footer-background-color: var(--knorr-navy);
+}
+
+[data-theme="dark"] .footer--dark {
+  --ifm-footer-background-color: #171f29;
+  border-top: 1px solid var(--knorr-border);
+}
