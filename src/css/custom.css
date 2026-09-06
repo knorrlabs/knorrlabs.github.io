@@ -70,53 +70,6 @@
   --knorr-surface-sunken: #f2f4f7;
 
   /* interactive rim: lit at the top, shadowed at the bottom.
-     worst stop #6b8098 = 3.34:1 on the glowed hero ground, 3.89:1 on page. */
-  --knorr-rim: linear-gradient(180deg, #6b8098 0%, #61768f 55%, #55698a 100%);
-  /* hover/focus rim. worst stop #23838f = 3.66:1 on the glowed hero ground. */
-  --knorr-rim-live: linear-gradient(180deg, #23838f 0%, #1c7380 100%);
-  /* decorative rim for the non-interactive closing plate */
-  --knorr-rim-soft: linear-gradient(180deg, #dfe4ea 0%, #ccd4de 100%);
-
-  --knorr-edge-light: rgba(255, 255, 255, 0.9);
-  --knorr-spine: #c3ccd8;
-  --knorr-rule-opacity: 0.55;
-
-  --knorr-shadow-ambient:
-    0 1px 2px rgba(20, 32, 48, 0.05), 0 10px 26px -18px rgba(20, 32, 48, 0.3);
-  --knorr-shadow-lift:
-    0 2px 5px rgba(20, 32, 48, 0.07), 0 22px 44px -22px rgba(20, 32, 48, 0.38);
-
-  /* hero field. Peak composite of both lobes is #e3eaeb, on which the lightest
-     text used there (--knorr-ink-muted) still reads 6.21:1. */
-  --knorr-glow-navy: rgba(29, 56, 92, 0.075);
-  --knorr-glow-teal: rgba(37, 149, 166, 0.06);
-  --knorr-dot: rgba(29, 56, 92, 0.13);
-
-  /* pointer sheen — a hover state, which is why it may be teal */
-  --knorr-sheen: rgba(37, 149, 166, 0.09);
-
-  /* recessed icon well */
-  --knorr-well: #f4f7f8;
-  --knorr-well-shade: rgba(29, 56, 92, 0.1);
-
-  /* filled action. Stops at --ifm-color-primary, never past it, so white text
-     clears 4.5:1 across the whole sweep: 11.85:1 -> 5.51:1. */
-  --knorr-cta-fill: linear-gradient(135deg, #1d385c 0%, #1c7380 100%);
-  --knorr-cta-ink: #ffffff;
-  --knorr-cta-edge: rgba(255, 255, 255, 0.22);
-
-  /* ---- material layer: added for the hub landing page ----------------------
-   * Surfaces, rims, shadows and fields for the "plate and light" landing page.
-   * Every rim gradient stop is verified >=3:1 against both the plate fill it
-   * encloses and every ground it can sit on (WCAG 1.4.11), including the
-   * glow-composited hero ground. hue 214 stays static; the teal rim, sheen and
-   * focus ring are hover/focus states, and the two brand keylines are the mark.
-   */
-
-  --knorr-surface-raised: #ffffff;
-  --knorr-surface-sunken: #f2f4f7;
-
-  /* interactive rim: lit at the top, shadowed at the bottom.
      worst stop #6b8098 = 3.21:1 on the glowed hero ground, 3.89:1 on page. */
   --knorr-rim: linear-gradient(180deg, #6b8098 0%, #61768f 55%, #55698a 100%);
   /* hover/focus rim. worst stop #23838f = 3.52:1 on the glowed hero ground. */
@@ -161,7 +114,7 @@
 
   /* Hairline borders render a true half-pixel on retina, which reads noticeably
      crisper than a fat 1px. Overridden in the media query below. */
-  --border-hairline: 1px;
+  --knorr-border-hairline: 1px;
 }
 
 [data-theme="dark"] {
@@ -251,51 +204,15 @@
   --knorr-cta-fill: linear-gradient(135deg, #4bc4d7 0%, #92dce7 100%);
   --knorr-cta-ink: #0c1118;
   --knorr-cta-edge: rgba(255, 255, 255, 0.35);
-
-  /* ---- material layer (dark) ----------------------------------------------
-   * Shadows barely read on a #0c1118 ground, so depth is carried by luminous
-   * rims and inset top highlights instead; the shadows are kept only to seat
-   * the plate. Rim gradients run the other way: brightest at the lit top edge.
-   */
-
-  --knorr-surface-raised: #1a232e;
-  --knorr-surface-sunken: #101823;
-
-  /* worst stop #647794 = 3.48:1 on the raised plate, 3.21:1 on the accent chip */
-  --knorr-rim: linear-gradient(180deg, #8294ad 0%, #6f829b 55%, #647794 100%);
-  /* worst stop #4bc4d7 = 7.08:1 */
-  --knorr-rim-live: linear-gradient(180deg, #92dce7 0%, #4bc4d7 100%);
-  --knorr-rim-soft: linear-gradient(180deg, #35414f 0%, #232d3a 100%);
-
-  --knorr-edge-light: rgba(255, 255, 255, 0.055);
-  --knorr-spine: #3a4a5c;
-  --knorr-rule-opacity: 0.75;
-
-  --knorr-shadow-ambient:
-    0 1px 2px rgba(0, 0, 0, 0.55), 0 12px 30px -20px rgba(0, 0, 0, 0.85);
-  --knorr-shadow-lift:
-    0 3px 8px rgba(0, 0, 0, 0.6), 0 26px 52px -24px rgba(0, 0, 0, 0.95);
-
-  /* peak composite of both lobes is #132939; --knorr-ink-muted reads 5.85:1 on
-     it, 5.05:1 in the worst case where a grid dot lands under a glyph. */
-  --knorr-glow-navy: rgba(29, 56, 92, 0.3);
-  --knorr-glow-teal: rgba(37, 149, 166, 0.1);
-  --knorr-dot: rgba(130, 148, 173, 0.1);
-
-  --knorr-sheen: rgba(75, 196, 215, 0.06);
-
-  --knorr-well: #121b25;
-  --knorr-well-shade: rgba(0, 0, 0, 0.55);
-
-  /* dark ink on the light teal sweep: 9.18:1 -> 12.28:1 */
-  --knorr-cta-fill: linear-gradient(135deg, #4bc4d7 0%, #92dce7 100%);
-  --knorr-cta-ink: #0c1118;
-  --knorr-cta-edge: rgba(255, 255, 255, 0.35);
 }
 
 /* The navbar sits on the page ground rather than floating on white. */
 .navbar {
-  border-bottom: 1px solid var(--knorr-border);
+  /* No border-bottom here on purpose. index.module.css draws the navbar edge as
+     a brand gradient hairline via :global(.navbar)::after. Both rules are one
+     class deep, so if this one also set border-bottom the winner would be
+     decided by bundle emission order rather than by anything written down.
+     One owner: the module. */
   box-shadow: none;
 }
 
@@ -322,6 +239,6 @@
    on 1x it would disappear, hence the media query rather than a flat value. */
 @media (min-resolution: 192dpi), (-webkit-min-device-pixel-ratio: 2) {
   :root {
-    --border-hairline: 0.5px;
+    --knorr-border-hairline: 0.5px;
   }
 }
