@@ -45,26 +45,6 @@ const config: Config = {
   onBrokenAnchors: "throw",
 
   headTags: [
-    {
-      // Sets data-theme before React hydrates so there is no flash of the wrong
-      // theme: stored choice if there is one, otherwise the system preference.
-      //
-      // The key MUST be "theme". That is the key @docusaurus/theme-common's
-      // colorMode context actually reads and writes (ColorModeStorageKey in
-      // theme-common/lib/contexts/colorMode.js). ignition-guides copies this
-      // script with the key "theme-cdb", which Docusaurus never writes — so its
-      // stored-choice branch is dead and it always falls back to the system
-      // preference. A visitor who toggles to light on a dark-mode OS gets a dark
-      // first paint that flips to light on hydration, which is the exact flash
-      // this script exists to prevent. Fix guides in phase 2.
-      //
-      // Because all four knorrlabs sites share the knorrlabs.dev origin they
-      // share localStorage, and all four are Docusaurus writing the same "theme"
-      // key — so the reader's choice carries across the hub and every docs site.
-      tagName: "script",
-      attributes: {},
-      innerHTML: `(function(){try{var s=localStorage.getItem('theme');var t=(s==='light'||s==='dark')?s:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
-    },
     // Cloudflare Web Analytics. Only emitted once a token is set in
     // src/data/site.ts, so the default build ships no third-party script.
     ...(CLOUDFLARE_ANALYTICS_TOKEN
@@ -158,10 +138,24 @@ const config: Config = {
     colorMode: {
       // System preference is the default. respectPrefersColorScheme makes
       // Docusaurus follow prefers-color-scheme when the visitor has not made an
-      // explicit choice; defaultMode is only the fallback for browsers that
-      // report no preference at all. The toggle still wins once used, and that
-      // choice is stored per-origin — which, because all four knorrlabs sites
-      // share knorrlabs.dev, means it carries across the hub and every docs site.
+      // explicit choice; defaultMode is only the SSR seed and the fallback for
+      // browsers reporting no preference. The toggle wins once used.
+      //
+      // Docusaurus injects its own anti-flash inline script, so do NOT add one
+      // here: a hand-written script runs before Docusaurus's and is simply
+      // overwritten by it, and getting the storage key right by hand is not
+      // possible to do durably (see below).
+      //
+      // The theme choice does NOT carry across the four knorrlabs sites, even
+      // though they share the knorrlabs.dev origin. future.v4 turns on site
+      // storage namespacing, so the key is theme-<md5(url+baseUrl)[:3]>:
+      //   knorrlabs.dev/                  theme-e29
+      //   knorrlabs.dev/ignition-guides/  theme-05a
+      //   knorrlabs.dev/ignition-stack/   theme-e93
+      //   knorrlabs.dev/stoker-operator/  theme-086
+      // Each site remembers its own choice. If a shared choice is ever wanted,
+      // set an explicit `storage: { namespace: false }` on all four — do not try
+      // to bridge it with a script.
       defaultMode: "light",
       respectPrefersColorScheme: true,
     },
