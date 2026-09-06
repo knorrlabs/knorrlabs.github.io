@@ -743,151 +743,21 @@
   }
 }
 
-/* ---------------------------------------------------------------------------
- * Orientation band — "Start here"
+/*
+ * Role eyebrow on the card: Learn -> Run -> Operate.
  *
- * Rows, not cards, on purpose: the card grid below is the detail view, and
- * repeating that shape here would read as the same content twice. A row list
- * scans top-to-bottom as a progression, which is what Learn -> Run -> Operate
- * actually is.
+ * The progression now lives on the cards themselves rather than in a second
+ * list above them. Cards render in manifest order, so it still reads
+ * left-to-right on desktop and top-to-bottom once the grid collapses.
  *
- * Each row is one plain anchor to a separate Docusaurus build, matching the
- * cards. The role badge is the only element that distinguishes the three, and
- * it does so with weight and a rule rather than a second hue, so the palette's
- * teal-is-interaction rule survives.
- * ------------------------------------------------------------------------- */
-
-.routes {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: var(--knorr-border-hairline) solid var(--knorr-border);
-}
-
-.route {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  grid-template-columns: 5.5rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.15rem 0.875rem;
-  border-bottom: var(--knorr-border-hairline) solid var(--knorr-border);
-  text-decoration: none;
-  border-radius: 8px;
-  transition:
-    background-color 160ms var(--knorr-ease-out-quad),
-    transform 160ms var(--knorr-ease-out-quad);
-}
-
-/* Pointer sheen, same treatment as the cards. Sits under the text via a
-   negative z-index inside the row's own isolation context, so it can never
-   wash over a glyph and cost contrast. */
-.route::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  opacity: 0;
-  background: radial-gradient(
-    22rem 12rem at var(--px, 50%) var(--py, 50%),
-    var(--knorr-sheen) 0%,
-    transparent 70%
-  );
-  transition: opacity 160ms var(--knorr-ease-out-quad);
-}
-
-.route:hover,
-.route:focus-visible {
-  text-decoration: none;
-  background-color: var(--knorr-surface-sunken);
-  transform: translateX(3px);
-}
-
-.route:hover::before,
-.route:focus-visible::before {
-  opacity: 1;
-}
-
-.route:focus-visible {
-  outline: 2px solid var(--ifm-color-primary);
-  outline-offset: 2px;
-}
-
-.routeRole {
-  flex: none;
+ * Distinguished by weight and tracking, not by a second hue, so the
+ * teal-is-interaction rule holds.
+ */
+.cardRole {
   font-size: 0.6875rem;
   font-weight: 680;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ifm-heading-color);
-  padding-bottom: 0.2rem;
-  /* --knorr-spine is only 1.55:1 on paper, which reads as nearly nothing under
-     a 11px label. --knorr-border-strong (3.0:1+ in both themes) is the token
-     meant for a rule that has to actually be seen. */
-  border-bottom: 2px solid var(--knorr-border-strong);
-  justify-self: start;
-}
-
-.routeSituation {
-  font-size: 0.9375rem;
-  line-height: 1.55;
   color: var(--knorr-ink-muted);
-  text-wrap: pretty;
-}
-
-.routeTarget {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  flex: none;
-  font-size: 0.9375rem;
-  font-weight: 640;
-  color: var(--ifm-link-color);
-}
-
-.routeArrow {
-  transition: transform 160ms var(--knorr-ease-out-quad);
-}
-
-.route:hover .routeArrow,
-.route:focus-visible .routeArrow {
-  transform: translateX(3px);
-}
-
-@media (max-width: 46rem) {
-  .route {
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "role target"
-      "situation situation";
-    gap: 0.55rem 1rem;
-    align-items: baseline;
-  }
-  .routeRole {
-    grid-area: role;
-  }
-  .routeSituation {
-    grid-area: situation;
-  }
-  .routeTarget {
-    grid-area: target;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .route,
-  .route::before,
-  .routeArrow {
-    transition: none;
-  }
-  .route:hover,
-  .route:focus-visible {
-    transform: none;
-  }
-  .route:hover .routeArrow,
-  .route:focus-visible .routeArrow {
-    transform: none;
-  }
+  margin-bottom: -0.35rem;
 }

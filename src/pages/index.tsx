@@ -96,8 +96,8 @@ export default function Home(): React.ReactElement {
             <p className={styles.lede}>{TAGLINE}</p>
 
             <div className={styles.actions}>
-              <a className={styles.btnPrimary} href="#start">
-                <span>Find the right project</span>
+              <a className={styles.btnPrimary} href="#projects">
+                <span>See the projects</span>
                 <ArrowIcon className={styles.btnArrow} />
               </a>
               <a className={styles.btnGhost} href={GITHUB_ORG_URL}>
@@ -114,50 +114,6 @@ export default function Home(): React.ReactElement {
               ))}
             </ul>
           </div>
-        </section>
-
-        {/* ---------------- orientation ---------------- */}
-        {/*
-          The five-second question: which of these three is mine? Answered as a
-          Learn -> Run -> Operate progression, so the card grid below reads as
-          the parts of one toolkit rather than three unrelated links. Role and
-          situation both come from the manifest, so this stays one list.
-        */}
-        <section
-          id="start"
-          className={styles.section}
-          aria-labelledby="start-heading"
-        >
-          <header className={styles.sectionHead}>
-            <h2 id="start-heading" className={styles.sectionTitle}>
-              Start here
-            </h2>
-            <span className={styles.sectionRule} aria-hidden="true" />
-            <span className={styles.sectionMeta}>Which one is yours</span>
-          </header>
-
-          <ol className={styles.routes}>
-            {projects.map((project) => (
-              <li key={project.slug}>
-                <a
-                  className={styles.route}
-                  href={project.href}
-                  onPointerEnter={enterSheen}
-                  onPointerMove={trackSheen}
-                  onPointerLeave={clearSheen}
-                >
-                  <span className={styles.routeRole}>{project.role}</span>
-                  <span className={styles.routeSituation}>
-                    {project.situation}
-                  </span>
-                  <span className={styles.routeTarget}>
-                    {project.name}
-                    <ArrowIcon className={styles.routeArrow} />
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ol>
         </section>
 
         {/* ---------------- projects ---------------- */}
@@ -194,8 +150,9 @@ export default function Home(): React.ReactElement {
                       </span>
                       <span className={styles.tag}>{project.language}</span>
                     </span>
+                    <span className={styles.cardRole}>{project.role}</span>
                     <span className={styles.cardName}>{project.name}</span>
-                    <span className={styles.cardBlurb}>{project.blurb}</span>
+                    <span className={styles.cardBlurb}>{project.situation}</span>
                     <span className={styles.cardFoot} aria-hidden="true">
                       <span className={styles.cardFootLabel}>Documentation</span>
                       <ArrowIcon className={styles.cardArrow} />
