@@ -48,10 +48,23 @@ const FOCUS = [
  * Deliberately not stateful: writing straight to the element's inline custom
  * properties keeps this off the React render path, and there is nothing to
  * hydrate because the CSS supplies fallbacks for both properties.
+ *
+ * The element's rect is measured once on enter and cached, not read per move.
+ * getBoundingClientRect forces a synchronous layout, and pointermove fires at
+ * roughly display rate, so measuring in the move handler would thrash layout
+ * for the entire time a pointer rests on a card.
  */
+const rects = new WeakMap<HTMLElement, DOMRect>();
+
+function enterSheen(event: React.PointerEvent<HTMLElement>): void {
+  rects.set(event.currentTarget, event.currentTarget.getBoundingClientRect());
+}
+
 function trackSheen(event: React.PointerEvent<HTMLElement>): void {
   const el = event.currentTarget;
-  const rect = el.getBoundingClientRect();
+  // Fall back to measuring if enter never fired — e.g. a pointer already inside
+  // the element when the page hydrates.
+  const rect = rects.get(el) ?? el.getBoundingClientRect();
   el.style.setProperty(
     "--px",
     `${((event.clientX - rect.left) / rect.width) * 100}%`,
@@ -64,6 +77,7 @@ function trackSheen(event: React.PointerEvent<HTMLElement>): void {
 
 function clearSheen(event: React.PointerEvent<HTMLElement>): void {
   const el = event.currentTarget;
+  rects.delete(el);
   el.style.removeProperty("--px");
   el.style.removeProperty("--py");
 }
@@ -128,6 +142,7 @@ export default function Home(): React.ReactElement {
                 <a
                   className={styles.route}
                   href={project.href}
+                  onPointerEnter={enterSheen}
                   onPointerMove={trackSheen}
                   onPointerLeave={clearSheen}
                 >
@@ -169,6 +184,7 @@ export default function Home(): React.ReactElement {
                   <a
                     className={styles.card}
                     href={project.href}
+                    onPointerEnter={enterSheen}
                     onPointerMove={trackSheen}
                     onPointerLeave={clearSheen}
                   >
@@ -231,6 +247,7 @@ export default function Home(): React.ReactElement {
             <a
               className={styles.btnGhost}
               href={GITHUB_ORG_URL}
+              onPointerEnter={enterSheen}
               onPointerMove={trackSheen}
               onPointerLeave={clearSheen}
             >
