@@ -136,7 +136,7 @@ export default function Home(): React.ReactElement {
                     {project.situation}
                   </span>
                   <span className={styles.routeTarget}>
-                    <span className={styles.routeName}>{project.name}</span>
+                    {project.name}
                     <ArrowIcon className={styles.routeArrow} />
                   </span>
                 </a>
