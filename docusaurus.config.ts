@@ -48,17 +48,22 @@ const config: Config = {
     {
       // Sets data-theme before React hydrates so there is no flash of the wrong
       // theme: stored choice if there is one, otherwise the system preference.
-      // This now agrees with colorMode.respectPrefersColorScheme below — the two
-      // must stay in sync or the pre-hydrate paint and the hydrated state differ
-      // and the page visibly flips on load.
       //
-      // Deliberately identical to the script in ignition-guides, storage key
-      // included: all four sites share the knorrlabs.dev origin, so they share
-      // localStorage, and a matching key means the reader's choice carries
-      // across the hub and every docs site.
+      // The key MUST be "theme". That is the key @docusaurus/theme-common's
+      // colorMode context actually reads and writes (ColorModeStorageKey in
+      // theme-common/lib/contexts/colorMode.js). ignition-guides copies this
+      // script with the key "theme-cdb", which Docusaurus never writes — so its
+      // stored-choice branch is dead and it always falls back to the system
+      // preference. A visitor who toggles to light on a dark-mode OS gets a dark
+      // first paint that flips to light on hydration, which is the exact flash
+      // this script exists to prevent. Fix guides in phase 2.
+      //
+      // Because all four knorrlabs sites share the knorrlabs.dev origin they
+      // share localStorage, and all four are Docusaurus writing the same "theme"
+      // key — so the reader's choice carries across the hub and every docs site.
       tagName: "script",
       attributes: {},
-      innerHTML: `(function(){try{var s=localStorage.getItem('theme-cdb');var t=(s==='light'||s==='dark')?s:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+      innerHTML: `(function(){try{var s=localStorage.getItem('theme');var t=(s==='light'||s==='dark')?s:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
     },
     // Cloudflare Web Analytics. Only emitted once a token is set in
     // src/data/site.ts, so the default build ships no third-party script.
