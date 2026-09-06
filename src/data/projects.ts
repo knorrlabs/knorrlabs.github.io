@@ -31,36 +31,54 @@ export interface Project {
   repo: string;
   /** Primary language, shown as a small tag on the card. */
   language: string;
+  /**
+   * One-word place in the workflow: Learn -> Run -> Operate. Drives the
+   * orientation band, which exists so a stranger can tell in five seconds which
+   * of the three projects is theirs. Kept here rather than in a lookup table on
+   * the page, so the manifest stays the only place the project list lives.
+   */
+  role: string;
+  /** The situation a reader is in when this project is the right answer. */
+  situation: string;
 }
 
 export const projects: Project[] = [
   {
-    slug: 'ignition-guides',
-    name: 'Ignition Guides',
+    slug: "ignition-guides",
+    name: "Ignition Guides",
     blurb:
-      'Guides for running Ignition the way modern infrastructure is run — Docker, Git, Kubernetes and ArgoCD',
-    href: '/ignition-guides/',
-    repo: 'knorrlabs/ignition-guides',
-    language: 'Docs',
+      "Guides for running Ignition the way modern infrastructure is run — Docker, Git, Kubernetes and ArgoCD",
+    href: "/ignition-guides/",
+    repo: "knorrlabs/ignition-guides",
+    language: "Docs",
+    role: "Learn",
+    situation:
+      "You are moving Ignition onto Git, Docker and Kubernetes and want the practices first.",
   },
   {
-    slug: 'ignition-stack',
-    name: 'ignition-stack',
+    slug: "ignition-stack",
+    name: "ignition-stack",
     blurb:
-      'CLI that generates ready-to-run Docker Compose stacks for Ignition 8.3 demos and SE engagements',
-    href: '/ignition-stack/',
-    repo: 'knorrlabs/ignition-stack',
-    language: 'Python',
+      "CLI that generates ready-to-run Docker Compose stacks for Ignition 8.3 demos and SE engagements",
+    href: "/ignition-stack/",
+    repo: "knorrlabs/ignition-stack",
+    language: "Python",
+    role: "Run",
+    situation:
+      "You need a working Ignition stack on your own machine today, not next week.",
   },
   {
-    slug: 'stoker-operator',
-    name: 'Stoker',
+    slug: "stoker-operator",
+    name: "Stoker",
     blurb:
-      'Kubernetes operator that syncs Ignition gateway configuration from a Git repository',
-    href: '/stoker-operator/',
-    repo: 'knorrlabs/stoker-operator',
-    language: 'Go',
+      "Kubernetes operator that syncs Ignition gateway configuration from a Git repository",
+    href: "/stoker-operator/",
+    repo: "knorrlabs/stoker-operator",
+    language: "Go",
+    role: "Operate",
+    situation:
+      "You are running gateways in production and want their configuration to live in Git.",
   },
 ];
 
-export const GITHUB_ORG_URL = 'https://github.com/knorrlabs';
+export const GITHUB_ORG_URL = "https://github.com/knorrlabs";
