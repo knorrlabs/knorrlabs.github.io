@@ -47,10 +47,15 @@ const config: Config = {
   headTags: [
     {
       // Sets data-theme before React hydrates so there is no flash of the wrong
-      // theme. Deliberately identical to the script in ignition-guides, storage
-      // key included: all four sites share the knorrlabs.dev origin, so they
-      // share localStorage, and a matching key means the reader's light/dark
-      // choice carries across the hub and every docs site.
+      // theme: stored choice if there is one, otherwise the system preference.
+      // This now agrees with colorMode.respectPrefersColorScheme below — the two
+      // must stay in sync or the pre-hydrate paint and the hydrated state differ
+      // and the page visibly flips on load.
+      //
+      // Deliberately identical to the script in ignition-guides, storage key
+      // included: all four sites share the knorrlabs.dev origin, so they share
+      // localStorage, and a matching key means the reader's choice carries
+      // across the hub and every docs site.
       tagName: "script",
       attributes: {},
       innerHTML: `(function(){try{var s=localStorage.getItem('theme-cdb');var t=(s==='light'||s==='dark')?s:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
@@ -146,8 +151,14 @@ const config: Config = {
       additionalLanguages: ["bash", "yaml"],
     },
     colorMode: {
+      // System preference is the default. respectPrefersColorScheme makes
+      // Docusaurus follow prefers-color-scheme when the visitor has not made an
+      // explicit choice; defaultMode is only the fallback for browsers that
+      // report no preference at all. The toggle still wins once used, and that
+      // choice is stored per-origin — which, because all four knorrlabs sites
+      // share knorrlabs.dev, means it carries across the hub and every docs site.
       defaultMode: "light",
-      respectPrefersColorScheme: false,
+      respectPrefersColorScheme: true,
     },
   } satisfies Preset.ThemeConfig,
 };
