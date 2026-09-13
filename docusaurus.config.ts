@@ -4,7 +4,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 import { projects, GITHUB_ORG_URL } from "./src/data/projects";
 import { CLOUDFLARE_ANALYTICS_TOKEN, TAGLINE } from "./src/data/site";
 
-// The hub is the organisation root Pages site. Setting a custom domain on THIS
+// The hub is the organization root Pages site. Setting a custom domain on THIS
 // repo cascades to every project site in the org, which is what moves
 // knorrlabs.github.io/<repo>/ to knorrlabs.dev/<repo>/ and 301s the old URLs.
 //
@@ -114,7 +114,7 @@ const config: Config = {
           items: projects.map((p) => ({ label: p.name, href: p.href })),
         },
         {
-          title: "Organisation",
+          title: "Organization",
           items: [
             { label: "GitHub", href: GITHUB_ORG_URL },
             {

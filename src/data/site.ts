@@ -1,5 +1,5 @@
 /**
- * Site-level constants that are not colours and not the project list.
+ * Site-level constants that are not colors and not the project list.
  */
 
 /**

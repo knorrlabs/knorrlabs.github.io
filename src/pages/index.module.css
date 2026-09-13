@@ -3,7 +3,7 @@
  *
  * The page is built from three material layers:
  *   ground   the page background (--ifm-background-color)
- *   sunken   a recessed band, darker/greyer than ground, with an inset rim
+ *   sunken   a recessed band, darker/grayer than ground, with an inset rim
  *   raised   a plate lifted off the ground by a gradient rim + ambient shadow
  *
  * Every rim that delimits an interactive control is drawn with the
@@ -191,7 +191,7 @@
 }
 
 /*
- * Outlined action. Its fill is opaque surface colour, never the glowed hero
+ * Outlined action. Its fill is opaque surface color, never the glowed hero
  * ground, so the teal label sits on a known background (5.51:1 light,
  * 7.69:1 dark) instead of on a composited gradient.
  */

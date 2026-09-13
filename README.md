@@ -3,7 +3,7 @@
 The landing page and project index for [knorrlabs](https://github.com/knorrlabs),
 served at **https://knorrlabs.dev**.
 
-This is the organisation's *root* GitHub Pages site. That matters more than it
+This is the organization's *root* GitHub Pages site. That matters more than it
 looks: setting a custom domain on this repo cascades to every project site in
 the org, so the three docs sites move to sub-paths of the same domain and their
 old URLs redirect permanently, with no proxy, rewrite rules or redirect config
@@ -45,7 +45,7 @@ rule:
 - **hue 188 (teal) is interaction, and nothing else** — if it is teal, you can
   click it
 
-Slate is not a competing colour; at hue 215.3 it is the brand navy (214.3) with
+Slate is not a competing color; at hue 215.3 it is the brand navy (214.3) with
 the chroma drained out, so it is the low-chroma end of the same ramp.
 
 Two things are easy to get wrong:

@@ -26,7 +26,7 @@ export interface Project {
    * Currently NOT rendered: the cards show `situation` instead, which says who
    * the project is for. Kept because it is the only canonical one-line
    * description of each project and phase 2's shared navbar dropdown is the
-   * obvious consumer. If that does not materialise, delete it rather than
+   * obvious consumer. If that does not materialize, delete it rather than
    * leaving it to rot.
    */
   blurb: string;

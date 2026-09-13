@@ -22,7 +22,7 @@ import styles from "./index.module.css";
  *
  * Everything below renders correctly with JavaScript disabled. The only script
  * is the pointer-sheen handler, which sets two CSS custom properties; the CSS
- * declares defaults for both, so with no JS the sheen simply sits centred.
+ * declares defaults for both, so with no JS the sheen simply sits centered.
  */
 
 const DOMAINS = ["Ignition", "Kubernetes", "GitOps"];
@@ -102,7 +102,7 @@ export default function Home(): React.ReactElement {
               </a>
               <a className={styles.btnGhost} href={GITHUB_ORG_URL}>
                 <GitHubIcon className={styles.btnGlyph} />
-                <span>GitHub organisation</span>
+                <span>GitHub organization</span>
               </a>
             </div>
 
@@ -198,7 +198,7 @@ export default function Home(): React.ReactElement {
               </h2>
               <p className={styles.outroBody}>
                 Source, issues and releases for every project live in one GitHub
-                organisation.
+                organization.
               </p>
             </div>
             <a

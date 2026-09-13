@@ -5,7 +5,7 @@
  *   hue 214 (navy -> slate) = static content. Headings, body, muted, borders, chrome.
  *   hue 188 (teal)          = interaction, and nothing else. If it's teal, you can click it.
  *
- * Slate is not a competing colour: at hue 215.3 it is the brand navy (214.3) with the
+ * Slate is not a competing color: at hue 215.3 it is the brand navy (214.3) with the
  * chroma drained out, so it is the low-chroma end of the same ramp.
  *
  * All contrast figures below are computed, not estimated. See palette spec.
@@ -161,7 +161,7 @@
   --docusaurus-highlighted-code-line-bg: rgba(37, 149, 166, 0.2);
 
   /* dracula's own background is #282a36 (hue 231, purple-tinted) which fights the
-     hue-214 navy surface. Its token palette contains no teal-band colour, so the
+     hue-214 navy surface. Its token palette contains no teal-band color, so the
      theme itself is kept; only the ground is corrected. */
   --prism-background-color: #171f29;
 
