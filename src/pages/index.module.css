@@ -673,11 +673,21 @@
   flex: none;
 }
 
+/*
+ * The evidence block keeps its natural height. An earlier attempt gave it
+ * flex:1 to soak up the featured card's slack, which did not remove the gap —
+ * it moved it inside the box and centered four lines of text in 223px of
+ * nothing. The slack belongs below the content, not inside an element.
+ */
 .gridItem[data-featured] .evidence {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex: none;
+}
+
+/* Content sits top-aligned; the footer pins to the bottom edge. Whitespace
+   above a pinned footer reads as a large card breathing. Whitespace inside a
+   bordered box reads as a bug. */
+.gridItem[data-featured] .cardFoot {
+  margin-top: auto;
 }
 
 .gridItem[data-featured] .cardMark {
