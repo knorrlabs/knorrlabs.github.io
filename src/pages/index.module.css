@@ -321,11 +321,26 @@
   padding: 0;
   display: grid;
   gap: 1.125rem;
-  grid-template-columns: 7fr 5fr;
+  /*
+   * minmax(0, …) rather than a bare 7fr 5fr. An fr track's automatic minimum
+   * is min-content, so the track refuses to shrink below the widest
+   * unbreakable thing inside it — here the evidence <pre>, whose white-space:
+   * pre makes its min-content the full width of its longest line. That floor
+   * propagates up and scrolls the whole PAGE sideways rather than scrolling
+   * the pre, which is the one element actually set up to scroll.
+   *
+   * Measured before the fix at 390px: document 420px wide in a 390px viewport,
+   * and 537px once the evidence block grew to the real docs tree.
+   */
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
 }
 
 .gridItem {
   display: flex;
+  /* Same automatic-minimum rule, one level down: a grid item's min-width:auto
+     is min-content. Without this the li reimposes the floor minmax() just
+     removed from the track. */
+  min-width: 0;
 }
 
 /*
@@ -343,6 +358,9 @@
   flex-direction: column;
   gap: 0.6rem;
   width: 100%;
+  /* Third and last automatic-minimum floor: the card is a flex item inside
+     .gridItem. All three have to be cleared or the widest one still wins. */
+  min-width: 0;
   padding: 1.375rem 1.375rem 1.25rem;
   border: 1px solid transparent;
   border-radius: 14px;
@@ -697,7 +715,7 @@
 
 @media (max-width: 60rem) {
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .gridItem:first-child {
     grid-row: auto;
@@ -753,6 +771,9 @@
  */
 .evidence {
   margin: 0.35rem 0 0;
+  /* As a flex item of .card its min-width:auto would be min-content, which
+     defeats its own overflow-x. This is what actually lets it scroll. */
+  min-width: 0;
   padding: 0.75rem 0.9rem;
   border-radius: 8px;
   overflow-x: auto;
