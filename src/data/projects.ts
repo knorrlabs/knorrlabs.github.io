@@ -90,10 +90,16 @@ export const projects: Project[] = [
       "Everything we learned putting Ignition on Git, Docker and Kubernetes, before you learn it the hard way.",
     mark: "/img/marks/guides.png",
     evidence:
-      "guides/\n"
-      + "  docker/            kubernetes/\n"
-      + "  observability/     version-control/\n"
-      + "labs/  docker \u00b7 helm \u00b7 version-control",
+      "docs/\n"
+      + "├── getting-started/  workstation · windows · k8s\n"
+      + "├── guides/\n"
+      + "│   ├── docker/           compose · volumes · day-two\n"
+      + "│   ├── kubernetes/       gitops · secrets · modules\n"
+      + "│   ├── observability/    telemetry · metrics · logs\n"
+      + "│   └── version-control/  branching · PRs · repo init\n"
+      + "├── labs/             docker · helm · version-control\n"
+      + "├── reference/        architecture · values layering\n"
+      + "└── tools/            ignition-lint · stoker-operator",
   },
   {
     slug: "ignition-stack",
