@@ -3,6 +3,10 @@ import React from "react";
 /**
  * Small inline line-icons. Inline SVG rather than an icon font or image so they
  * inherit currentColor and cost no extra request.
+ *
+ * The per-project line icons that used to live here are gone: the cards now
+ * show each project's real logo. Generic book/layers/gear glyphs would fit any
+ * dev-tool site on earth, which is exactly what made the page read as generic.
  */
 
 type IconProps = { className?: string };
@@ -19,33 +23,8 @@ const base = {
   "aria-hidden": true,
 };
 
-export function BookIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-    </svg>
-  );
-}
 
-export function StackIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <path d="m12 2 9 5-9 5-9-5 9-5z" />
-      <path d="m3 12 9 5 9-5" />
-      <path d="m3 17 9 5 9-5" />
-    </svg>
-  );
-}
 
-export function GearIcon({ className }: IconProps) {
-  return (
-    <svg {...base} className={className}>
-      <circle cx="12" cy="12" r="3" />
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-    </svg>
-  );
-}
 
 export function ArrowIcon({ className }: IconProps) {
   return (
@@ -70,9 +49,3 @@ export function GitHubIcon({ className }: IconProps) {
     </svg>
   );
 }
-
-export const projectIcons: Record<string, React.ComponentType<IconProps>> = {
-  "ignition-guides": BookIcon,
-  "ignition-stack": StackIcon,
-  "stoker-operator": GearIcon,
-};

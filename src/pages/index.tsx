@@ -2,12 +2,8 @@ import React from "react";
 import Layout from "@theme/Layout";
 import { projects, GITHUB_ORG_URL } from "../data/projects";
 import { TAGLINE } from "../data/site";
-import {
-  ArrowIcon,
-  GitHubIcon,
-  StackIcon,
-  projectIcons,
-} from "../components/Icons";
+import { useBaseUrlUtils } from "@docusaurus/useBaseUrl";
+import { ArrowIcon, GitHubIcon } from "../components/Icons";
 import styles from "./index.module.css";
 
 /**
@@ -25,22 +21,18 @@ import styles from "./index.module.css";
  * declares defaults for both, so with no JS the sheen simply sits centered.
  */
 
-const DOMAINS = ["Ignition", "Kubernetes", "GitOps"];
+/*
+ * Hero spec line. Replaces the IGNITION / KUBERNETES / GITOPS chips, which
+ * restated the tagline directly above them word for word — a shape created and
+ * then filled with the nearest available words, which is the loudest
+ * "generated" tell a page can have.
+ *
+ * Every value here is verified: all three repos carry an MIT LICENSE, primary
+ * languages come from the repo metadata, and 8.3 is the Ignition version
+ * ignition-stack targets. Facts only, and only facts that rot slowly.
+ */
+const SPECS = ["MIT licensed", "Go \u00b7 Python \u00b7 TypeScript", "Built for Ignition 8.3"];
 
-const FOCUS = [
-  {
-    title: "Ignition platform tooling",
-    body: "Deploying and operating gateways the GitOps way, so a stack is described in a repository rather than clicked together by hand.",
-  },
-  {
-    title: "Kubernetes operators and CLIs",
-    body: "Turning manual stack setup into declarative, repeatable workflows that a team can review, roll back and reproduce.",
-  },
-  {
-    title: "Documentation",
-    body: "Treating DevOps and GitOps for industrial systems as a first-class concern rather than an afterthought bolted on at the end.",
-  },
-];
 
 /**
  * Tracks the pointer inside a card so the hover sheen follows it.
@@ -83,6 +75,12 @@ function clearSheen(event: React.PointerEvent<HTMLElement>): void {
 }
 
 export default function Home(): React.ReactElement {
+  // useBaseUrlUtils, not useBaseUrl: the marks are resolved inside projects.map,
+  // and calling a hook in a loop violates the Rules of Hooks. This returns a
+  // plain function that is safe to call per item. Needed at all because the site
+  // may be served from a sub-path, where a bare /img/... would break.
+  const { withBaseUrl } = useBaseUrlUtils();
+
   return (
     <Layout description={TAGLINE}>
       <main className={styles.main}>
@@ -106,10 +104,10 @@ export default function Home(): React.ReactElement {
               </a>
             </div>
 
-            <ul className={styles.domains}>
-              {DOMAINS.map((domain) => (
-                <li key={domain} className={styles.domain}>
-                  {domain}
+            <ul className={styles.specs}>
+              {SPECS.map((spec) => (
+                <li key={spec} className={styles.spec}>
+                  {spec}
                 </li>
               ))}
             </ul>
@@ -133,60 +131,55 @@ export default function Home(): React.ReactElement {
           </header>
 
           <ul className={styles.grid}>
-            {projects.map((project) => {
-              const Icon = projectIcons[project.slug] ?? StackIcon;
-              return (
-                <li key={project.slug} className={styles.gridItem}>
-                  <a
-                    className={styles.card}
-                    href={project.href}
-                    onPointerEnter={enterSheen}
-                    onPointerMove={trackSheen}
-                    onPointerLeave={clearSheen}
-                  >
-                    <span className={styles.cardTop}>
-                      <span className={styles.cardWell}>
-                        <Icon className={styles.cardIcon} />
-                      </span>
-                      <span className={styles.tag}>{project.language}</span>
+            {projects.map((project, i) => (
+              <li
+                key={project.slug}
+                className={styles.gridItem}
+                data-featured={i === 0 || undefined}
+              >
+                <a
+                  className={styles.card}
+                  href={project.href}
+                  onPointerEnter={enterSheen}
+                  onPointerMove={trackSheen}
+                  onPointerLeave={clearSheen}
+                >
+                  <span className={styles.cardTop}>
+                    {/*
+                      alt="" is deliberate: the mark is decorative because
+                      project.name is rendered as text inside this same anchor,
+                      and a non-empty alt would announce the name twice.
+                    */}
+                    <span className={styles.cardMark}>
+                      <img
+                        className={styles.cardMarkImg}
+                        src={withBaseUrl(project.mark)}
+                        data-bleed={project.markBleed || undefined}
+                        alt=""
+                        width={64}
+                        height={64}
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </span>
-                    <span className={styles.cardRole}>{project.role}</span>
-                    <span className={styles.cardName}>{project.name}</span>
-                    <span className={styles.cardBlurb}>{project.situation}</span>
-                    <span className={styles.cardFoot} aria-hidden="true">
-                      <span className={styles.cardFootLabel}>Documentation</span>
-                      <ArrowIcon className={styles.cardArrow} />
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-
-        {/* ---------------- focus ---------------- */}
-        <section className={styles.section} aria-labelledby="focus-heading">
-          <header className={styles.sectionHead}>
-            <h2 id="focus-heading" className={styles.sectionTitle}>
-              Focus
-            </h2>
-            <span className={styles.sectionRule} aria-hidden="true" />
-            <span className={styles.sectionMeta}>What the work is about</span>
-          </header>
-
-          <div className={styles.strata}>
-            <ol className={styles.strataList}>
-              {FOCUS.map((item, i) => (
-                <li key={item.title} className={styles.stratum}>
-                  <span className={styles.stratumIndex} aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
+                    <span className={styles.tag}>{project.language}</span>
                   </span>
-                  <h3 className={styles.stratumTitle}>{item.title}</h3>
-                  <p className={styles.stratumBody}>{item.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
+                  <span className={styles.cardRole}>{project.role}</span>
+                  <span className={styles.cardName}>{project.name}</span>
+                  <span className={styles.cardBlurb}>{project.situation}</span>
+                  {i === 0 && project.evidence && (
+                    <pre className={styles.evidence} aria-hidden="true">
+                      <code>{project.evidence}</code>
+                    </pre>
+                  )}
+                  <span className={styles.cardFoot} aria-hidden="true">
+                    <span className={styles.cardFootLabel}>Documentation</span>
+                    <ArrowIcon className={styles.cardArrow} />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* ---------------- outro ---------------- */}

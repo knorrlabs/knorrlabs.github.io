@@ -48,6 +48,32 @@ export interface Project {
   role: string;
   /** The situation a reader is in when this project is the right answer. */
   situation: string;
+  /**
+   * Path under static/ to the project's OWN logo.
+   *
+   * The hub shows real product marks, not generic line icons. A hub with no
+   * visual relationship to the things it links to is precisely what makes it
+   * read as generated.
+   */
+  mark: string;
+  /**
+   * True when the mark is already a disc and should fill its circular frame
+   * rather than inset into it. Stoker's badge is the only one today, and it is
+   * why the frame is a circle at all: it becomes the reference shape and the
+   * other two inset into the same silhouette.
+   */
+  markBleed?: boolean;
+  /**
+   * A few lines of real output this project produces. Rendered on the featured
+   * card only — three of these would rebuild the symmetry the layout breaks on
+   * purpose.
+   *
+   * Every line must be true and verifiable against the repo. Invented output is
+   * worse than none: it is the same failure as a keyword chip, one layer down.
+   * Deliberately version-free so it rots slowly. If it stops being true, delete
+   * it rather than letting it lie.
+   */
+  evidence?: string;
 }
 
 export const projects: Project[] = [
@@ -61,7 +87,13 @@ export const projects: Project[] = [
     language: "Docs",
     role: "Learn",
     situation:
-      "You are moving Ignition onto Git, Docker and Kubernetes and want the practices first.",
+      "Everything we learned putting Ignition on Git, Docker and Kubernetes, before you learn it the hard way.",
+    mark: "/img/marks/guides.png",
+    evidence:
+      "guides/\n"
+      + "  docker/            kubernetes/\n"
+      + "  observability/     version-control/\n"
+      + "labs/  docker \u00b7 helm \u00b7 version-control",
   },
   {
     slug: "ignition-stack",
@@ -73,7 +105,13 @@ export const projects: Project[] = [
     language: "Python",
     role: "Run",
     situation:
-      "You need a working Ignition stack on your own machine today, not next week.",
+      "One command, a running 8.3 gateway. No ticket, no VM request.",
+    mark: "/img/marks/stack.svg",
+    evidence:
+      "$ ignition-stack create demo --arch basic\n"
+      + "$ cd demo && docker compose up -d\n"
+      + "\n"
+      + "  gateway RUNNING \u2192 http://localhost:9088",
   },
   {
     slug: "stoker-operator",
@@ -86,6 +124,14 @@ export const projects: Project[] = [
     role: "Operate",
     situation:
       "You are running gateways in production and want their configuration to live in Git.",
+    mark: "/img/marks/stoker.png",
+    markBleed: true,
+    evidence:
+      "apiVersion: stoker.io/v1alpha1\n"
+      + "kind: GatewaySync\n"
+      + "spec:\n"
+      + "  git:   { repo: ops/gateways, ref: main }\n"
+      + "  sync:  { profiles: { standard: ... } }",
   },
 ];
 
