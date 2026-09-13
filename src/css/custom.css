@@ -18,6 +18,26 @@
   --knorr-paper: #fafaf8;
   --knorr-gradient: linear-gradient(135deg, #1d385c 0%, #2595a6 100%);
 
+  /* ---- ember: product identity -------------------------------------------
+   * Third named role, alongside hue 214 (static content) and hue 188 (teal,
+   * interaction). Ember marks a PRODUCT: the mark frame, the role eyebrow, the
+   * language tag. It is never used on a link, a button, a hover rim or a focus
+   * ring — those belong to teal, and that contract is the most valuable thing
+   * in this palette. If a reviewer has to ask "is this ember thing clickable?",
+   * the rule has already been broken.
+   *
+   * Sampled from ignition-stack's own mark (#d9531e), not chosen freehand.
+   * Theme-invariant like --knorr-navy and --knorr-teal: verified >=3:1 on all
+   * five grounds in both themes, so decorative rims need no [data-theme] fork.
+   * Text-grade use does fork — no single orange clears 4.5:1 on both #fafaf8
+   * and #0c1118. Rejected: #c2410c (3.06 on the dark plate), #f97316 (2.68 on
+   * paper), #e8722c, the dog's own orange (2.92 on paper).
+   */
+  --knorr-ember: #d9531e;
+  --knorr-ember-ink: #a8410c;      /* 5.86:1 paper, 6.13:1 plate, 5.44:1 worst */
+  --knorr-ember-wash: rgba(217, 83, 30, 0.09);
+  --knorr-ember-rim: rgba(217, 83, 30, 0.32);
+
   /* interaction ramp — lightest step is the brand teal, by construction:
      base = hsl(187.9, 63.5%, 30.6%), Infima lightness x1.30 -> #2496a6 (#2595a6 to rounding) */
   --ifm-color-primary: #1c7380;
@@ -154,6 +174,14 @@
   --knorr-border: #26303d;                 /* DECORATIVE only — 1.42:1 */
   --knorr-border-strong: #516278;          /* 3.04:1 */
   --knorr-surface-accent: #182b36;
+
+  /* Ember, re-derived rather than inverted, on the same principle as the teal
+     ramp: hue and saturation held, only lightness solved against #0c1118. The
+     light-mode ink #a8410c reads 3.09:1 there and fails; #fb923c clears at
+     8.37:1 and still holds 6.45:1 on surface-accent, the worst realistic case. */
+  --knorr-ember-ink: #fb923c;      /* 8.37:1 ground, 7.01:1 plate, 6.45:1 worst */
+  --knorr-ember-wash: rgba(249, 115, 22, 0.11);
+  --knorr-ember-rim: rgba(249, 115, 22, 0.3);
   --ifm-toc-border-color: #26303d;
   --ifm-color-emphasis-300: #26303d;
 
