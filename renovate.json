@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>knorrlabs/renovate-config"
+    "local>knorrlabs/renovate-config",
+    "local>knorrlabs/renovate-config:docs-site"
   ]
 }
